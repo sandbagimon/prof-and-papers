@@ -7,8 +7,7 @@ from pprint import pprint
 import os
 from dotenv import load_dotenv
 import streamlit as st
-import pandas as pd
-import numpy as np
+
 
 # class TrackableAssistantAgent(AssistantAgent):
 #     AssistantAgent
