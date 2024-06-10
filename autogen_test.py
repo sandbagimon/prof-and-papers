@@ -26,7 +26,8 @@ load_dotenv()
 config_list = [
     {
         # "model": "llama3-8b-8192",  # the name of your running model
-        "model": "Mixtral-8x7b-32768",  # the name of your running model
+        "model": "gemma-7b-it",  # the name of your running model
+        # "model": "Mixtral-8x7b-32768",  # the name of your running model
         "base_url": "https://api.groq.com/openai/v1",  # the local address of the api
         # "api_type": "open_ai",
         "api_key": os.getenv("API_KEY"),  # just a placeholder
