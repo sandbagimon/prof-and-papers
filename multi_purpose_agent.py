@@ -87,11 +87,10 @@ user_proxy = autogen.UserProxyAgent(
 
 
 def multi_agent_chat_init(pdf):
-
+    print(pdf)
     loader = PDFMinerLoader(pdf)
     data = loader.load()
     text = data[0].page_content
-
     def clean_text(text):
         text = re.sub(r'\s+', ' ', text)
         text = text.replace('\n', ' ')
@@ -110,10 +109,11 @@ def multi_agent_chat_init(pdf):
             {
                 "sender": user_proxy_auto,
                 "recipient": RQ_bot,
-                "message": tasks[0],
+                "message": tasks,
                 "clear_history": True,
                 "silent": False,
-                "summary_method": "last_msg",
+                "summary_method": "reflection_with_llm",
+                "max_turns":1,
             },
             # {
             #     "sender": user_proxy_auto,
@@ -130,5 +130,7 @@ def multi_agent_chat_init(pdf):
             # },
         ]
     )
+    with st.chat_message("Research Quality"):
+        st.markdown(chat_results[0].chat_history[1]['content'])
 if __name__ == "__main__":
-    multi_agent_chat_init("test_paper.pdf")
+    multi_agent_chat_init("test_paper_3.pdf")

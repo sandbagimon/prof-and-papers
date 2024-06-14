@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
 import os
-from autogen_test import group_chat_init
+from multi_purpose_agent import multi_agent_chat_init
 
 
-st.title('Professors and papers V2 (with more Context Window)')
+st.title('Professors and papers V2 (with more Context Window Also VERY VERY SLOW)')
 
 
 
@@ -17,5 +17,5 @@ if uploaded_file is not None:
         file_name = uploaded_file.name
 
     with st.container():
-        group_chat_init(temp_file_path)
+        multi_agent_chat_init(temp_file_path)
 
