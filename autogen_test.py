@@ -25,13 +25,28 @@ import pandas as pd
 
 
 load_dotenv()
+# config_list = [
+#     {
+#         "model": "llama3-8b-8192",  # the name of your running model
+#         # "model": "gemma-7b-it",  # the name of your running model
+#         # "model": "Mixtral-8x7b-32768",  # the name of your running model
+#         "base_url": "https://api.groq.com/openai/v1",  # the local address of the api
+#         # "api_type": "open_ai",
+#         "api_key": os.getenv("API_KEY"),  # just a placeholder
+#     },
+#
+# ]
+
+
+
 config_list = [
     {
-        "model": "llama3-8b-8192",  # the name of your running model
+        "model": "lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF",  # the name of your running model
         # "model": "gemma-7b-it",  # the name of your running model
         # "model": "Mixtral-8x7b-32768",  # the name of your running model
-        "base_url": "https://api.groq.com/openai/v1",  # the local address of the api
+        "base_url": "https://5ba7-35-77-94-0.ngrok-free.app/v1",  # the local address of the api
         # "api_type": "open_ai",
+        # "api_key": os.getenv("API_KEY"),  # just a placeholder
         "api_key": os.getenv("API_KEY"),  # just a placeholder
     },
 
@@ -93,7 +108,7 @@ grouped_data['Prompt'] = grouped_data['Prompt'].apply(lambda x: '\n'.join(x))
 
 
 critirias = {
-    "Introduction": "You are a Research Paper criteria marker. Your job is to evaluate the paper provided by context based on specific criteria. You only comment on YOUR criterions. For each response, provide a score and feedback for each criterion. The criteria are as follows:",
+    "Introduction": "You are a Research Paper criteria marker. Your job is to evaluate the paper provided by context based on specific criteria. You only comment on YOUR criterions. For each response, provide a score and feedback for each criterion. The feedback MUST refer to the paper. The criteria are as follows:",
     "Research Quality": grouped_data.loc[grouped_data['Input'] == 'Research Quality', 'Prompt'].values[0],
 
     "Writing and Presentation": grouped_data.loc[grouped_data['Input'] == 'Writing and Presentation', 'Prompt'].values[0],
@@ -216,23 +231,32 @@ def group_chat_init(pdf):
         human_input_mode="TERMINATE",
     )
 
-    groupchat = autogen.GroupChat(agents=[top_manager,RQ_bot, WP_bot, IR_bot, EV_bot, OA_bot],
-                                  messages=[],
-                                  max_round=7,
-                                  speaker_selection_method="round_robin")
-    manager = autogen.GroupChatManager(groupchat=groupchat, llm_config=config_list[0])
+    # groupchat = autogen.GroupChat(agents=[top_manager,RQ_bot, WP_bot, IR_bot, EV_bot, OA_bot],
+    #                               messages=[],
+    #                               max_round=7,
+    #                               speaker_selection_method="round_robin")
+
+
+    # manager = autogen.GroupChatManager(groupchat=groupchat, llm_config=config_list[0])
 
 
 
+    # user_proxy.initiate_chat(
+    #     manager,
+    #     message="Evaluate the following paper " + text,
+    # )
+
+    # for msg in groupchat.messages[2:]:
+    #     with st.chat_message(msg['name']):
+    #         st.markdown(msg['content'])
+    # pprint(groupchat.messages)
+
+    ################################################ single chat
     user_proxy.initiate_chat(
-        manager,
-        message="Evaluate the following paper " + text,
+        RQ_bot,
+        message = "Evaluate the following paper "+text,
+        temprature = 0
     )
-
-    for msg in groupchat.messages[2:]:
-        with st.chat_message(msg['name']):
-            st.markdown(msg['content'])
-
 
 if __name__ == "__main__":
     group_chat_init("test_paper_short.pdf")
