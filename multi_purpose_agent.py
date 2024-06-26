@@ -10,6 +10,12 @@ from dotenv import load_dotenv
 import nltk
 import streamlit as st
 import pandas as pd
+import autogen
+from autogen.agentchat.contrib.retrieve_assistant_agent import RetrieveAssistantAgent
+from autogen.agentchat.contrib.retrieve_user_proxy_agent import RetrieveUserProxyAgent
+from langchain_core.prompts import ChatPromptTemplate
+
+
 
 load_dotenv()
 
@@ -60,7 +66,6 @@ RQ_bot = AssistantAgent(
     system_message=critirias["Introduction"] + critirias["Research Quality"] + reinforcement,
     human_input_mode="NEVER",  # Never ask for human input.
 )
-
 
 user_proxy_auto = autogen.UserProxyAgent(
     name="User_Proxy_Auto",
@@ -133,4 +138,4 @@ def multi_agent_chat_init(pdf):
     with st.chat_message("Research Quality"):
         st.markdown(chat_results[0].chat_history[1]['content'])
 if __name__ == "__main__":
-    multi_agent_chat_init("test_paper_3.pdf")
+    multi_agent_chat_init()
