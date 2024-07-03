@@ -9,7 +9,7 @@ import os
 from multi_purpose_agent import multi_agent_chat_init
 from rag_test_langchain import langchain_rag
 
-st.title('Professors and papers V2 (with more Context Window Also VERY VERY SLOW)')
+st.title('A summary bot for research papers base on RAG')
 
 
 

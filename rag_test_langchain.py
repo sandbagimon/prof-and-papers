@@ -34,7 +34,8 @@ def langchain_rag(pdf):
     vectorstore = Qdrant.from_documents(documents=splits, embedding=embeddings, url=url, api_key=api_key)
     # Retrieve and generate using the relevant snippets of the blog.
     retriever = vectorstore.as_retriever()
-    prompt = hub.pull("rlm/rag-prompt")
+    # prompt = hub.pull("rlm/rag-prompt")
+    prompt = hub.pull("imon/research_rag_prompt")
     st.text("Document Loaded..")
 
     def format_docs(docs):
@@ -45,9 +46,9 @@ def langchain_rag(pdf):
         model="llama3-70b-8192",
         api_key=os.getenv("API_KEY"),  # Optional if not set as an environment variable
     )
-
     rag_chain = (
-            {"context": retriever | format_docs, "question": RunnablePassthrough()}
+            # {"context": retriever | format_docs, "question": RunnablePassthrough()}
+            {"context": retriever | format_docs}
             | prompt
             | llm
             | StrOutputParser()
@@ -55,7 +56,7 @@ def langchain_rag(pdf):
 
     # rag_chain.invoke("Summarize the paper")
 
-    st.write_stream(rag_chain.stream("Give me a brief summary about the paper"))
+    st.write_stream(rag_chain.stream("Show me the writing analysis of the paper"))
 
 
 
