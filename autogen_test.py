@@ -11,40 +11,21 @@ import nltk
 import streamlit as st
 import pandas as pd
 
-# class TrackableAssistantAgent(AssistantAgent):
-#     AssistantAgent
-#
-#     def send(self, message,
-#              reciptant,
-#              request_reply  = None,
-#              silent  = False):
-#         with st.chat_message():
-#             st.markdown(message['content'])
-#         return super().send(self, message, reciptant, request_reply)
 
 
 
 load_dotenv()
-# config_list = [
-#     {
-#         "model": "llama3-8b-8192",  # the name of your running model
-#         # "model": "gemma-7b-it",  # the name of your running model
-#         # "model": "Mixtral-8x7b-32768",  # the name of your running model
-#         "base_url": "https://api.groq.com/openai/v1",  # the local address of the api
-#         # "api_type": "open_ai",
-#         "api_key": os.getenv("API_KEY"),  # just a placeholder
-#     },
-#
-# ]
+
 
 
 
 config_list = [
     {
-        "model": "lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF",  # the name of your running model
+        # "model": "lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF",  # the name of your running model
         # "model": "gemma-7b-it",  # the name of your running model
+        "model":"llama3-70b-8192",
         # "model": "Mixtral-8x7b-32768",  # the name of your running model
-        "base_url": "https://5ba7-35-77-94-0.ngrok-free.app/v1",  # the local address of the api
+        # "base_url": "https://5ba7-35-77-94-0.ngrok-free.app/v1",  # the local address of the api
         # "api_type": "open_ai",
         # "api_key": os.getenv("API_KEY"),  # just a placeholder
         "api_key": os.getenv("API_KEY"),  # just a placeholder
